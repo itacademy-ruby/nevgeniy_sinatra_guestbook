@@ -1,0 +1,45 @@
+vaverka@vaverka-ubuntu:~/first_project/it-academy/nevgeny-sinatra$ irb
+irb(main):001:0> File.open('posts.txt', 'a'){ |file| file.write "Привет-медвед \n" }
+=> 27
+irb(main):002:0> File.open('posts.txt', 'r'){ |file| file.read }=> "ПриветП \\nриветПривет \\nПривет-медвед \n"
+irb(main):003:0> File.open('posts.txt', 'a'){ |file| file.write "Привет-медвед \n" }
+=> 27
+irb(main):004:0> string.split("====================\n")
+NameError: undefined local variable or method `string' for main:Object
+	from (irb):4
+	from /usr/bin/irb:12:in `<main>'
+irb(main):005:0> string.split('====================')
+NameError: undefined local variable or method `string' for main:Object
+	from (irb):5
+	from /usr/bin/irb:12:in `<main>'
+irb(main):006:0> string = File.open('posts.txt', 'r'){ |file| file.read }=> "date: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n===================="
+irb(main):007:0> string.split('====================')
+=> ["date: 0000:00:00\nauthor: vasya\ncontent: test\n", "\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n", "\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n", "\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n"]
+irb(main):008:0> string
+=> "date: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n====================\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n===================="
+irb(main):009:0> row = string.split('====================').first
+
+=> "date: 0000:00:00\nauthor: vasya\ncontent: test\n"
+
+irb(main):010:0> row.match /^date:\s(\S+)/
+
+=> #<MatchData "date: 0000:00:00" 1:"0000:00:00">
+irb(main):011:0> row2 = "\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n"
+=> "\n\ndate: 0000:00:00\nauthor: vasya\ncontent: test\n"
+irb(main):012:0> row2.match /^date:\s(\S+)/
+=> #<MatchData "date: 0000:00:00" 1:"0000:00:00">
+irb(main):013:0> date = row2.match /^date:\s(\S+)
+irb(main):014:0/ author = row2.match /^author:\s(\S+)/
+irb(main):015:-1* 
+irb(main):016:-1* row = "date: 10-120-012\nauthor: ivan ivanov\ncontent: test"
+SyntaxError: (irb):14: syntax error, unexpected tLABEL
+author = row2.match /^author:\s(\S+)/
+                             ^
+	from /usr/bin/irb:12:in `<main>'
+irb(main):017:0> author = row2.match /^author:\s(\S+)/
+=> #<MatchData "author: vasya" 1:"vasya">
+irb(main):018:0> row = "date: 10-120-012\nauthor: ivan ivanov\ncontent: test"
+=> "date: 10-120-012\nauthor: ivan ivanov\ncontent: test"
+irb(main):019:0> row.split("\n")
+=> ["date: 10-120-012", "author: ivan ivanov", "content: test"]
+irb(main):020:0> 

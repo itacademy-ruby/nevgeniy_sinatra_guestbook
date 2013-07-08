@@ -1,0 +1,19 @@
+<html>
+<head>
+	<title>Здрасти мордасти</title>
+</head>
+<body>
+	<p>OLOLOLO</p>
+	<h1><%= Time.now %></h1>
+Текущее время:	<%= Time.now %><br / >
+
+Content: <%= @posts %><br / >
+
+Параметры: <%= params %>
+<form action="/" method="post"> 
+Author:		<input type="text" name="author" ><br />
+Content:	<textarea type="text" name="content" cols="40" rows="3"></textarea><br />
+			<input type="submit" >
+</form>
+</body>
+</html>
