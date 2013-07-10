@@ -3,15 +3,18 @@
 	<title>Здрасти мордасти</title>
 </head>
 <body>
-	<p>OLOLOLO</p>
-	<h1><%= Time.now %></h1>
-Текущее время:	<%= Time.now %><br / >
+	<p>OLOLOLO</p><br / >
 
-Content: <%= @posts %><br / >
+	<h1><%= Time.now %></h1><br / >
 
-Параметры: <%= params %>
+Текущее время:	<%= Time.now %><br>
+<br>
+Content: <%= render_posts %><br / >
+
+Параметры: <%= params %><br / >
+
 <form action="/" method="post"> 
-Author:		<input type="text" name="author" ><br />
+Name:		<input type="text" name="name" ><br />
 Content:	<textarea type="text" name="content" cols="40" rows="3"></textarea><br />
 			<input type="submit" >
 </form>
