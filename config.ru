@@ -1,3 +1,3 @@
-require './nevgeny-sinatra'
+require './sinatra'
 
 run Sinatra::Application

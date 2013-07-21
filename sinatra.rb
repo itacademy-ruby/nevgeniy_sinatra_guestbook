@@ -2,6 +2,8 @@
 
 require 'sinatra'
 require 'date'
+require 'bootstrap'
+# require 'sinatra/assetpack'
 
 get '/hi' do
 "Privet"
@@ -17,7 +19,10 @@ post '/' do #=> Вывод будет на туже страницу, возмо
 #Получаем автора и контент через params
 author = params[:author]
 content = params[:content]
-write_post author, content
+if author != nil && author.empty? != true && 
+    content != nil && content.empty? != true
+    write_post author, content
+end
 erb :index
 redirect to '/'
 end
@@ -35,20 +40,17 @@ def read_posts
     if /^date: (?<date>.*)\nname: (?<name>.*)\ncontent: (?<content>.*)$/m =~ row
       { date: DateTime.parse(date), name: name, content: content }
     else
-      raise 'Invalid guestbook entry'
+      raise "Ошибка данных"
     end
   end
   #  if entries.empty?
   #   empty_str << "Наша гостевая книга пуста :("
   # end
   entries.each do |entry|
-    str << "<strong>Дата:</strong> #{entry[:date]}<br /> <strong>Имя:</strong> #{entry[:name]}<br /> <strong>Сообщение:</strong> #{entry[:content]}<br />"
+    str << "<strong>Дата:</strong> #{entry[:date]}<br /> <strong>Имя:</strong> #{entry[:name]}<br /> <strong>Сообщение:</strong> <blockquote>#{entry[:content]}</blockquote><br />"
   end
-  if str.size == 0
-    puts "В книге еще нет сообщений :("
-  else
+    str.gsub("\r\n", "<br />")
     str
-  end
 end
 
 def write_post author, content

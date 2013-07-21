@@ -1,17 +1,32 @@
-<html>
-<head>
-	<title>Гостевая книга</title>
-</head>
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <title>Гостевая книга</title>
+     <!-- Bootstrap -->
+    <link href="//netdna.bootstrapcdn.com/bootswatch/2.3.2/cosmo/bootstrap.min.css" rel="stylesheet">
+  </head>
 <body>
-	<h1>Гостевая книга</h1><br / >
+<div class="container">
+  <div class="navbar">
+    <div class="navbar-inner">
+      <a class="brand" href="/">Гостевая книга</a>
+        <ul class="nav">
+          <li class="active"><a href="/"></a></li>
+        </ul>
+    </div>
+   </div>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 <br>
 Записи: <div><%= @posts %></div><br / >
 <br / >
-
+ 
 <form action="/" method="post"> 
-Author:		<input type="text" name="author" ><br />
-Content:	<textarea type="text" name="content" cols="40" rows="3"></textarea><br />
-			<input type="submit" >
+<label>Автор:</label>
+<input type="text" name="author" ><br />
+<label>Сообщение:</label><textarea  type="text" name="content" cols="40" rows="4" maxlength="1000" ></textarea><br />
+<input class="btn btn-primary" type="submit" >
 </form>
+</div>
 </body>
 </html>
