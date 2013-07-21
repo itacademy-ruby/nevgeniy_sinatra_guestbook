@@ -1,20 +1,15 @@
 <html>
 <head>
-	<title>Здрасти мордасти</title>
+	<title>Гостевая книга</title>
 </head>
 <body>
-	<p>OLOLOLO</p><br / >
-
-	<h1><%= Time.now %></h1><br / >
-
-Текущее время:	<%= Time.now %><br>
+	<h1>Гостевая книга</h1><br / >
 <br>
-Content: <%= render_posts %><br / >
-
-Параметры: <%= params %><br / >
+Записи: <div><%= @posts %></div><br / >
+<br / >
 
 <form action="/" method="post"> 
-Name:		<input type="text" name="name" ><br />
+Author:		<input type="text" name="author" ><br />
 Content:	<textarea type="text" name="content" cols="40" rows="3"></textarea><br />
 			<input type="submit" >
 </form>

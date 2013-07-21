@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 require 'sinatra'
+require 'date'
 
 get '/hi' do
 "Privet"
@@ -8,7 +9,7 @@ end
 
 get '/' do
   @posts = read_posts
-  render_posts
+  # render_posts
   erb :index
 end
 
@@ -18,77 +19,36 @@ author = params[:author]
 content = params[:content]
 write_post author, content
 erb :index
+redirect to '/'
 end
 
-# def read_posts
-# content = File.open("posts.txt") do |file|
-# file.read
-# end
-# rows = content.split('====================').map{ |r| r.chomp }
-
-# rows.each do |file|
-# date = file.match /^date:\s(\S+)/
-# author = file.match /^author:\s(\S+)/
-# content = file.match /^content:\s(\S+)/
-# end
-
-# parsed_content ||= {} #массив в хэши
-# parsed_content[:date] => date
-# parsed_content[:author] => author
-# parsed_content[:content] => content
-
-# render_post = parsed_content
-# render_post.each |file| do
-# puts file
-# end
 
 def read_posts
+  str = ""
   content = File.open("posts.txt") do |file|
     file.read
   end
- 
-  rows = content.split('====================').map{ |r| r.chomp }
-  
-  parsed_file ||= []
- 
-  rows.each do |file|
-    parsed_row = Hash.new #массив в хэши
- 
-    parsed_row[:date] = file.match(/^date:\s(\S+)/)
-    parsed_row[:author] = file.match(/^author:\s(\S+)/)
-    parsed_row[:content] = file.match(/^content:\s(\S+)/)
 
-    parsed_file << parsed_row
-  end
-end
+  rows = content.split("====================\n").map{ |r| r.chomp }
 
-def render_posts
-  posts = read_posts
-
-  html_posts = ""
-
-  if posts.length > 0
-    posts.each do |post|
-      html_posts << "<div><small><strong>#{post[:author]}</strong> on #{post[:date]} 
-      wrote</small><blockquote>#{render_content(post[:content])}</blockquote></div>"
+  entries = rows.collect do |row|
+    if /^date: (?<date>.*)\nname: (?<name>.*)\ncontent: (?<content>.*)$/m =~ row
+      { date: DateTime.parse(date), name: name, content: content }
+    else
+      raise 'Invalid guestbook entry'
     end
+  end
+  #  if entries.empty?
+  #   empty_str << "Наша гостевая книга пуста :("
+  # end
+  entries.each do |entry|
+    str << "<strong>Дата:</strong> #{entry[:date]}<br /> <strong>Имя:</strong> #{entry[:name]}<br /> <strong>Сообщение:</strong> #{entry[:content]}<br />"
+  end
+  if str.size == 0
+    puts "В книге еще нет сообщений :("
   else
-    html_posts = "<div>Guestbook is empty... =(</div>"
+    str
   end
-
-  html_posts
-end
-
-def render_content(content)
-  paragraphs = ""
-
-  message.each_line('\n') do |line|
-    if line.empty? != true
-      paragraphs << "#{line.chomp('\n')}<br />"
-    end
-  end
-
-  paragraphs.chomp('<br />')
 end
 
 def write_post author, content
