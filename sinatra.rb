@@ -11,8 +11,12 @@ end
 
 get '/' do
   @posts = read_posts
-  # render_posts
   erb :index
+end
+
+get '/clear' do
+  clear
+  redirect to '/'
 end
 
 post '/' do #=> Вывод будет на туже страницу, возможно выводить и так "/add_post"
@@ -23,10 +27,10 @@ if author != nil && author.empty? != true &&
     content != nil && content.empty? != true
     write_post author, content
 end
+
 erb :index
 redirect to '/'
 end
-
 
 def read_posts
   str = ""
@@ -43,11 +47,14 @@ def read_posts
       raise "Ошибка данных"
     end
   end
-  #  if entries.empty?
-  #   empty_str << "Наша гостевая книга пуста :("
-  # end
+
+  if entries.size > 0 
   entries.each do |entry|
-    str << "<strong>Дата:</strong> #{entry[:date]}<br /> <strong>Имя:</strong> #{entry[:name]}<br /> <strong>Сообщение:</strong> <blockquote>#{entry[:content]}</blockquote><br />"
+    str << "<strong>Дата:</strong> #{entry[:date]}<br /> <strong>Имя:</strong> #{entry[:name]}<br /> 
+      <strong>Сообщение:</strong> <blockquote>#{entry[:content]}</blockquote><br />"
+  end
+  else 
+    str << "<strong><blockquote>Гостевая книга пуста :(</strong></blockquote>"
   end
     str.gsub("\r\n", "<br />")
     str
@@ -62,4 +69,10 @@ def write_post author, content
     file.puts "content: #{content}"
     file.puts "===================="
 end
+end
+
+def clear
+  File.open('posts.txt', 'w') do |file| 
+    file.print ''
+  end
 end
